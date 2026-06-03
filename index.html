@@ -4,137 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ituri Konnect - Forum de Bunia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --danger: #dc2626;
+            --google: #db4437;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f0f2f5; color: #1c1e21; }
-        header { background: #2c5aa0; color: white; padding: 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .header { background: #2c5aa0; color: white; padding: 15px; margin-bottom: 20px; }
-        .user-info { float: right; font-size: 14px; }
-        .logout { background: #dc3545; width: auto; padding: 5px 10px; font-size: 12px; border: none; border-radius: 4px; color: white; cursor: pointer; }
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .auth-box, .post-form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .post-form h3 { margin-bottom: 15px; color: #2c5aa0; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; }
-        button { background: #2c5aa0; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
-        button:hover { background: #1e3d6f; }
-        .google-btn { background: #db4437; }
-        .google-btn:hover { background: #c33d2e; }
-        .post { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .post h4 { color: #2c5aa0; margin-bottom: 8px; }
-        .post .date { color: #65676b; font-size: 13px; margin-bottom: 10px; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .navbar {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border .2s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        textarea { resize: vertical; min-height: 100px; }
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .btn:hover { background: var(--primary-dark); }
+        .btn-google { background: var(--google); width: 100%; }
+        .btn-google:hover { background: #c33d2e; }
+        .btn-danger { background: var(--danger); padding: 8px 14px; font-size: 14px; }
+        .btn-danger:hover { background: #b91c1c; }
+        .post {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+        .post h4 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .post-meta {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
         .hidden { display: none; }
-        footer { text-align: center; padding: 20px; color: #65676b; margin-top: 40px; }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>Ituri Konnect <span class="user-info" id="userInfo"></span></h2>
-    </div>
-
-    <div class="container">
-        <!-- Boîte de connexion -->
-        <div id="authBox" class="auth-box">
-            <h3>Connexion</h3>
-            <button id="googleBtn" class="google-btn">Se connecter avec Google</button>
-        </div>
-
-        <!-- Formulaire de post - caché si pas connecté -->
-        <div id="postForm" class="post-form hidden">
-            <h3>Créer une nouvelle discussion</h3>
-            <input type="text" id="titre" placeholder="Titre de votre message">
-            <textarea id="message" rows="4" placeholder="Écrivez votre message ici..."></textarea>
-            <button onclick="ajouterPost()">Publier</button>
-            <button id="logoutBtn" class="logout">Se déconnecter</button>
-        </div>
-
-        <div id="liste-posts">
-            <div class="post">
-                <h4>Bienvenue sur Ituri Konnect !</h4>
-                <div class="date">Posté par Admin - 1 juin 2026</div>
-                <p>Ceci est le premier message du forum. Partagez vos idées, actualités et questions sur Bunia et l'Ituri. Karibu !</p>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">Ituri Konnect</div>
+            <div class="user-badge">
+                <span id="userInfo"></span>
+                <button id="logoutBtn" class="btn btn-danger hidden">Sortir</button>
             </div>
         </div>
+    </nav>
+
+    <div class="container">
+        <div id="authBox" class="card">
+            <h3>Rejoins la communauté de Bunia</h3>
+            <p style="color:var(--text-muted); margin-bottom:16px; font-size:15px;">Connecte-toi pour participer aux discussions</p>
+            <button id="googleBtn" class="btn btn-google">Continuer avec Google</button>
+        </div>
+
+        <div id="postForm" class="card hidden">
+            <h3>Créer une discussion</h3>
+            <input type="text" id="titre" placeholder="Titre de votre message">
+            <textarea id="message" placeholder="Partage ton idée, une info, une question..."></textarea>
+            <button onclick="ajouterPost()" class="btn">Publier</button>
+        </div>
+
+        <div id="liste-posts"></div>
     </div>
 
-    <footer>
-        <p>Ituri Konnect © 2026 - Fait avec ❤️ pour Bunia</p>
-    </footer>
+    <footer>Ituri Konnect © 2026 · Fait avec ❤️ pour Bunia</footer>
 
-    <!-- ↓↓ CODE FIREBASE ICI ↓↓↓ -->
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
-      import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
+      import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
+      import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 
-      // 1. REMPLACE TA_CLE_API par ta vraie clé
       const firebaseConfig = {
-        apiKey: "TA_CLE_API_ICI",
+        apiKey: "AIzaSyCt45URjqGbJiWaSivR2WgkHf7gNhZsOBc",
         authDomain: "ituri-konnect.firebaseapp.com",
         projectId: "ituri-konnect",
+        storageBucket: "ituri-konnect.firebasestorage.app",
+        messagingSenderId: "371067100688",
+        appId: "1:371067100688:web:507efe8b805c310d367495",
+        measurementId: "G-CYHKRWVR60"
       };
 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
+      const db = getFirestore(app);
       const provider = new GoogleAuthProvider();
 
-      // 2. Bouton connexion Google
       document.getElementById('googleBtn').onclick = () => {
-        signInWithRedirect(auth, provider);
+        signInWithPopup(auth, provider).catch((error) => {
+          alert('ERREUR: ' + error.code + ' - ' + error.message);
+        });
       };
+      
+      document.getElementById('logoutBtn').onclick = () => signOut(auth);
 
-      // 3. Bouton déconnexion
-      document.getElementById('logoutBtn').onclick = () => {
-        signOut(auth);
-      };
-
-      // 4. Gérer le retour après about:blank
-      getRedirectResult(auth).then((result) => {
-        if (result) {
-          alert('Karibu ' + result.user.displayName);
-        }
-      }).catch((error) => {
-        alert('Erreur connexion: ' + error.code);
-      });
-
-      // 5. Vérifier si l'utilisateur est connecté
       onAuthStateChanged(auth, (user) => {
+        const authBox = document.getElementById('authBox');
+        const postForm = document.getElementById('postForm');
+        const userInfo = document.getElementById('userInfo');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
         if (user) {
-          document.getElementById('authBox').classList.add('hidden');
-          document.getElementById('postForm').classList.remove('hidden');
-          document.getElementById('userInfo').textContent = user.displayName;
+          authBox.classList.add('hidden');
+          postForm.classList.remove('hidden');
+          logoutBtn.classList.remove('hidden');
+          userInfo.textContent = user.displayName;
         } else {
-          document.getElementById('authBox').classList.remove('hidden');
-          document.getElementById('postForm').classList.add('hidden');
-          document.getElementById('userInfo').textContent = '';
+          authBox.classList.remove('hidden');
+          postForm.classList.add('hidden');
+          logoutBtn.classList.add('hidden');
+          userInfo.textContent = '';
         }
       });
 
-      // 6. Fonction ajouter post
-      window.ajouterPost = function() {
-        const titre = document.getElementById('titre').value;
-        const message = document.getElementById('message').value;
+      // Charger les posts en temps réel
+      const q = query(collection(db, "posts"), orderBy("date", "desc"));
+      onSnapshot(q, (snapshot) => {
+        const listePosts = document.getElementById('liste-posts');
+        listePosts.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const post = doc.data();
+          const date = post.date?.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) || 'maintenant';
+          listePosts.innerHTML += `
+            <div class="post">
+                <h4>${post.titre}</h4>
+                <div class="post-meta">Posté par ${post.auteur} · ${date}</div>
+                <p>${post.message}</p>
+            </div>
+          `;
+        });
+        
+        // Si pas de posts, on met le message de bienvenue
+        if (snapshot.empty) {
+          listePosts.innerHTML = `
+            <div class="post">
+                <h4>Bienvenue sur Ituri Konnect !</h4>
+                <div class="post-meta">Posté par Admin · 1 juin 2026</div>
+                <p>Ceci est le premier message du forum. Partagez vos idées, actualités et questions sur Bunia et l'Ituri. Karibu !</p>
+            </div>
+          `;
+        }
+      });
+
+      window.ajouterPost = async function() {
+        const titre = document.getElementById('titre').value.trim();
+        const message = document.getElementById('message').value.trim();
         const user = auth.currentUser;
         
-        if (!titre || !message) {
-          alert('Remplissez tous les champs svp');
-          return;
-        }
-        if (!user) {
-          alert('Connecte-toi d\'abord');
-          return;
-        }
+        if (!titre || !message) return alert('Remplis le titre et le message');
+        if (!user) return alert('Connecte-toi d\'abord');
 
-        const date = new Date().toLocaleDateString('fr-FR');
-        const nouveauPost = `
-            <div class="post">
-                <h4>${titre}</h4>
-                <div class="date">Posté par ${user.displayName} - ${date}</div>
-                <p>${message}</p>
-            </div>
-        `;
-        
-        document.getElementById('liste-posts').insertAdjacentHTML('afterbegin', nouveauPost);
-        document.getElementById('titre').value = '';
-        document.getElementById('message').value = '';
+        try {
+          await addDoc(collection(db, "posts"), {
+            titre: titre,
+            message: message,
+            auteur: user.displayName,
+            uid: user.uid,
+            date: serverTimestamp()
+          });
+          document.getElementById('titre').value = '';
+          document.getElementById('message').value = '';
+        } catch (error) {
+          alert('Erreur: ' + error.message);
+        }
       }
     </script>
 </body>
